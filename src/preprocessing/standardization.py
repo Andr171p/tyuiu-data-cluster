@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from src.config import settings
 
 
-class DataStandardScaler:
+class DatasetStandardScaler:
     _scaler: StandardScaler = None
 
     @classmethod
@@ -43,4 +43,4 @@ class DataStandardScaler:
         return
 
 
-standard_scaler = DataStandardScaler()
+standard_scaler = DatasetStandardScaler()
