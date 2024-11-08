@@ -9,16 +9,16 @@ from src.visualization.utils import save_txt
 
 
 class DataReport:
-    def __init__(self, data: pd.DataFrame) -> None:
-        self.data = data
+    def __init__(self, df: pd.DataFrame) -> None:
+        self.df = df
 
     def info(self) -> None:
-        self.data.info(
+        self.df.info(
             verbose=True,
             buf=None
         )
         buffer = io.StringIO()
-        self.data.info(buf=buffer)
+        self.df.info(buf=buffer)
         text = buffer.getvalue()
         path = settings.reports.data_report_path / "info.txt"
         save_txt(
@@ -27,16 +27,23 @@ class DataReport:
         )
 
     def describe(self) -> None:
-        describe: pd.DataFrame = self.data.describe()
+        describe: pd.DataFrame = self.df.describe()
         path = settings.reports.data_report_path / "describe.csv"
         describe.to_csv(path)
 
     def corr(self, corr_value: float = 0.8) -> None:
         path = settings.reports.data_report_path / "corr.png"
         sns.heatmap(
-            self.data.corr() > corr_value,
+            self.df.corr() > corr_value,
             annot=True,
             cbar=False
         )
         plt.savefig(path)
+        plt.show()
+
+    def labels_bar(self, column: str) -> None:
+        self.df[column].value_counts().plot(kind='bar')
+        plt.savefig(settings.reports.data_report_path / f'{column}.png')
+        plt.xlabel(column)
+        plt.ylabel('Количество студентов')
         plt.show()

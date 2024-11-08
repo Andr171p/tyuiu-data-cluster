@@ -2,15 +2,14 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 
-from typing import List, Any
-
+from src.config import settings
 from src.visualization.model.report import ModelReport
 
 
 class KMeansModel:
     def __init__(self) -> None:
         self.model: KMeans | None = None
-        self.error: List[Any] = []
+        self.error: list[float] = []
 
     def fit(self, data: pd.DataFrame) -> None:
         for n_clusters in range(1, 21):
@@ -38,3 +37,22 @@ class KMeansModel:
         )
         segments = self.model.fit_predict(data)
         return segments
+
+    def labels(self) -> np.ndarray:
+        return self.model.labels_
+
+    @staticmethod
+    def cluster(
+            data: pd.DataFrame,
+            labels: np.ndarray,
+            file_name_template: str = "tyuiu-dataset-"
+    ) -> None:
+        data = data.drop(
+            labels=['Unnamed: 0.1', 'Unnamed: 0'],
+            axis=1
+        )
+        data['Cluster'] = labels
+        data_clusters = [group for _, group in data.groupby('Cluster')]
+        for i, cluster in enumerate(data_clusters):
+            path = settings.data.clustered_groups_data_path / f"{file_name_template}{i + 1}.csv"
+            cluster.to_csv(path)
