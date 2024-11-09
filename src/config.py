@@ -10,7 +10,7 @@ class DataSettings(BaseModel):
     raw_path: Path = BASE_DIR / "data" / "raw"
     raw_years_path: Path = BASE_DIR / "data" / "raw" / "years"
     raw_all_path: Path = BASE_DIR / "data" / "raw"
-    interim_data_path: Path = BASE_DIR / "data" / "interim" / "tyuiu-dataset.csv"
+    interim_data_path: Path = BASE_DIR / "data" / "interim"
     processed_data_path: Path = BASE_DIR / "data" / "processed" / "tyuiu-dataset-model.csv"
     clustered_data_path: Path = BASE_DIR / "data" / "clustered" / "tyuiu-dataset-clustered.csv"
     clustered_groups_data_path: Path = BASE_DIR / "data" / "clustered" / "groups"
