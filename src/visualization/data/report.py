@@ -31,6 +31,11 @@ class DataReport:
         path = settings.reports.data_report_path / "describe.csv"
         describe.to_csv(path)
 
+    def top_values(self, column: str) -> None:
+        top_values: pd.Series = self.df[column].value_counts()
+        path = settings.reports.data_report_path / f"top-{column}.csv"
+        top_values.to_csv(path)
+
     def corr(self, corr_value: float = 0.8) -> None:
         path = settings.reports.data_report_path / "corr.png"
         sns.heatmap(
@@ -43,7 +48,7 @@ class DataReport:
 
     def labels_bar(self, column: str) -> None:
         self.df[column].value_counts().plot(kind='bar')
-        plt.savefig(settings.reports.data_report_path / f'{column}.png')
+        plt.savefig(settings.reports.data_report_path / f'bar_{column}.png')
         plt.xlabel(column)
         plt.ylabel('Количество студентов')
         plt.show()
