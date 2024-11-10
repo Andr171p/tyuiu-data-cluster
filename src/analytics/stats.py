@@ -5,7 +5,7 @@ from typing import Any
 
 
 class Statistics:
-    ALPHA = 0.05
+    ALPHA: float = 0.05
 
     def __init__(self, df: pd.DataFrame) -> None:
         self._df = df.describe()
@@ -26,10 +26,3 @@ class Statistics:
         sam1 = self._df.loc[:half, column]
         sam2 = self._df.loc[half:, column]
         return scipy.stats.ttest_ind(sam2, sam1)
-
-
-df = pd.read_csv(r'C:\Users\andre\TyuiuClusterModel\data\processed\tyuiu-processed.csv')
-s = Statistics(df)
-print(s.shapiro('Сумма баллов'))
-print(s.normal_test('Сумма баллов'))
-print(s.t_test('Сумма баллов'))

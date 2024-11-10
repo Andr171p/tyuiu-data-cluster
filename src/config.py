@@ -7,6 +7,7 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 
 class DataSettings(BaseModel):
+    data_path: Path = BASE_DIR / "data"
     raw_path: Path = BASE_DIR / "data" / "raw"
     raw_years_path: Path = BASE_DIR / "data" / "raw" / "years"
     raw_all_path: Path = BASE_DIR / "data" / "raw"
@@ -32,3 +33,15 @@ class Settings(BaseModel):
 
 
 settings = Settings()
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+df = pd.read_csv(r'C:\Users\andre\TyuiuClusterModel\data\processed\tyuiu-dataset-processed.csv')
+
+
+linkage_data = linkage(df.to_numpy(), method='ward', metric='euclidean')
+dendrogram(linkage_data)
+plt.show()

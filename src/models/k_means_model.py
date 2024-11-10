@@ -48,7 +48,7 @@ class KMeansModel:
             file_name_template: str = "tyuiu-dataset-"
     ) -> None:
         data = data.drop(
-            labels=['Unnamed: 0.1', 'Unnamed: 0'],
+            labels=['Unnamed: 0'],
             axis=1
         )
         data['Cluster'] = labels

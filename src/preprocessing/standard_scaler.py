@@ -21,7 +21,7 @@ class Standardization:
 
     @classmethod
     def save(
-            cls, file_name: str = settings.model.standard_scaler_path
+            cls, file_name: str = settings.models.standard_scaler_path
     ) -> None:
         with open(
                 file=file_name,
@@ -31,7 +31,7 @@ class Standardization:
 
     @classmethod
     def load(
-            cls, file_name: str = settings.model.standard_scaler_path
+            cls, file_name: str = settings.models.standard_scaler_path
     ) -> StandardScaler | None:
         if cls._scaler is None:
             with open(

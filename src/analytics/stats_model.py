@@ -27,11 +27,3 @@ class StatsModel:
         if self._history is not None:
             summary: Summary = self._history.summary()
             return summary
-
-
-df = pd.read_csv(r'C:\Users\andre\TyuiuClusterModel\data\processed\tyuiu-processed.csv')
-s = StatsModel(df, feature_1='Обществознание', feature_2='Композиция')
-s.fit()
-t = s.summary()
-print(t)
-print(type(t))
