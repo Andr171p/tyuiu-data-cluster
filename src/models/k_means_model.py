@@ -11,7 +11,7 @@ class KMeansModel:
         self.model: KMeans | None = None
         self.error: list[float] = []
 
-    def fit(self, data: pd.DataFrame) -> None:
+    def fit(self, data: pd.DataFrame, report_dir: str) -> None:
         for n_clusters in range(1, 21):
             model = KMeans(
                 init='k-means++',
@@ -21,7 +21,7 @@ class KMeansModel:
             )
             model.fit(data)
             self.error.append(model.inertia_)
-        report: ModelReport = ModelReport()
+        report: ModelReport = ModelReport(directory=report_dir)
         report.error(self.error)
 
     def fit_predict(
@@ -45,14 +45,11 @@ class KMeansModel:
     def cluster(
             data: pd.DataFrame,
             labels: np.ndarray,
-            file_name_template: str = "tyuiu-dataset-"
+            group: str,
+            file_name_template: str
     ) -> None:
-        data = data.drop(
-            labels=['Unnamed: 0'],
-            axis=1
-        )
         data['Cluster'] = labels
         data_clusters = [group for _, group in data.groupby('Cluster')]
         for i, cluster in enumerate(data_clusters):
-            path = settings.data.clustered_groups_data_path / f"{file_name_template}{i + 1}.csv"
+            path = settings.data.clustered_groups_data_path / f'{group}' / f'{file_name_template}-{i + 1}.csv'
             cluster.to_csv(path)

@@ -12,9 +12,9 @@ class DataSettings(BaseModel):
     raw_years_path: Path = BASE_DIR / "data" / "raw" / "years"
     raw_all_path: Path = BASE_DIR / "data" / "raw"
     interim_data_path: Path = BASE_DIR / "data" / "interim"
-    processed_data_path: Path = BASE_DIR / "data" / "processed" / "tyuiu-dataset-model.csv"
-    clustered_data_path: Path = BASE_DIR / "data" / "clustered" / "tyuiu-dataset-clustered.csv"
-    clustered_groups_data_path: Path = BASE_DIR / "data" / "clustered" / "groups"
+    processed_data_path: Path = BASE_DIR / "data" / "processed"
+    clustered_data_path: Path = BASE_DIR / "data" / "clustered"
+    clustered_groups_data_path: Path = BASE_DIR / "data" / "clustered"
 
 
 class ModelSettings(BaseModel):
@@ -33,15 +33,3 @@ class Settings(BaseModel):
 
 
 settings = Settings()
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram, linkage
-
-df = pd.read_csv(r'C:\Users\andre\TyuiuClusterModel\data\processed\tyuiu-dataset-processed.csv')
-
-
-linkage_data = linkage(df.to_numpy(), method='ward', metric='euclidean')
-dendrogram(linkage_data)
-plt.show()

@@ -1,28 +1,37 @@
-import scipy
 import pandas as pd
+import matplotlib.pyplot as plt
 
-from typing import Any
 
+df = pd.read_csv(r'C:\Users\andre\TyuiuClusterModel\data\universities\ВШЦТ.csv')
 
-class Statistics:
-    ALPHA: float = 0.05
+'''bins = [0, 130, 180, 210, 240, 270, 310]
+labels = ['0-130', '131-180', '181-210', '211-240', '241-270', '271-310']
 
-    def __init__(self, df: pd.DataFrame) -> None:
-        self._df = df.describe()
-        print(self._df)
+# Создаем новый столбец с сегментами
+df['Сегмент'] = pd.cut(df['Сумма баллов'], bins=bins, labels=labels, right=False)
 
-    def shapiro(self, column: str) -> bool:
-        stat, p = scipy.stats.shapiro(self._df[column])
-        print('Statistics=%.3f, p-value=%.3f' % (stat, p))
-        return True if p > self.ALPHA else False
+# Считаем количество записей в каждом сегменте
+segment_counts = df['Сегмент'].value_counts()
 
-    def normal_test(self, column: str) -> bool:
-        stat, p = scipy.stats.normaltest(self._df[column])
-        print('Statistics=%.3f, p-value=%.3f' % (stat, p))
-        return True if p > self.ALPHA else False
+# Строим круговую диаграмму
+plt.figure(figsize=(8, 6))
+plt.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%')
+plt.title('Распределение суммы баллов по сегментам')
+plt.show()'''
 
-    def t_test(self, column: str) -> Any:
-        half = len(self._df[column]) / 2
-        sam1 = self._df.loc[:half, column]
-        sam2 = self._df.loc[half:, column]
-        return scipy.stats.ttest_ind(sam2, sam1)
+print(df.columns)
+
+bins = [3, 3.5, 4, 4.5, 5]
+labels = ['3-3.5', '3.5-4', '4-4.5', '4.5-5']
+
+# Создаем новый столбец с сегментами
+df['Сегмент'] = pd.cut(df['Ср. балл док-та об образовании'], bins=bins, labels=labels, right=False)
+
+# Считаем количество записей в каждом сегменте
+segment_counts = df['Сегмент'].value_counts()
+
+# Строим круговую диаграмму
+plt.figure(figsize=(8, 6))
+plt.pie(segment_counts, labels=segment_counts.index, autopct='%1.1f%%')
+plt.title('Распределение суммы баллов по сегментам')
+plt.show()
